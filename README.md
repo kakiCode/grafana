@@ -1,5 +1,5 @@
 # grafana
-## grafana docker image
+## grafana docker image handling scripts
 
 - hostname: grafana
 - expects to resolve the influx database host on environment variable $DB_CONTAINER
