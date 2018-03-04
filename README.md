@@ -1,25 +1,27 @@
-# grafana
-## grafana docker container handling scripts
+##docker image for grafana
 
+- can be pulled from docker hub:
+    - [caquicode/grafana](https://hub.docker.com/r/caquicode/grafana/)
+    
 - hostname: grafana
-- expects to resolve the influx database host on environment variable $DB_CONTAINER
-- exposes port $PORT for web access to dashboards
+- expects:
+    - to resolve the influx database host on ``influxdb``
+- exposes:
+    - port ``3000`` for web access to dashboards
+- scripts:
+    - create.sh - pulls third party grafana docker image and pushes it to dockerHub;
+    - run.sh - runs an image container in the local docker engine;    
+- example docker-compose section:
 
-### usage:
-
-- edit ENV.inc accordingly:
-  ```
-  NAME=grafana
-  CONTAINER=$NAME
-  HOST=$NAME
-  SOURCE_IMAGE=grafana/grafana
-  IMAGE=$NAME
-  PORT=3000
-  DB_CONTAINER=influxdb
-  BLUEMIX_CONTAINER_MEMORY=128
-  REGISTRY=registry.ng.bluemix.net/mynodeappbue
-  BLUEMIX_IMG=$REGISTRY/$NAME
-  DOCKER_HUB_IMG=kakicode/$NAME
-  ```
-- scripts/copyImage.sh - pull source docker image and push it to dockerHub (/kakicode/grafana) and private bluemix registry (registry.ng.bluemix.net/mynodeappbue/grafana)
-- scripts/runLocalContainer.sh - run on local docker engine
+	  grafana:
+	    image: caquicode/grafana
+	    container_name: grafana
+	    depends_on: 
+	      - influxdb
+	    links:
+	      - "influxdb:influxdb"
+	    environment:
+	      - GF_SECURITY_ADMIN_USER=root
+	      - GF_SECURITY_ADMIN_PASSWORD=password
+	    ports:
+	      - "3000:3000"

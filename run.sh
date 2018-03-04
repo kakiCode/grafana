@@ -1,9 +1,12 @@
 #!/bin/sh
 
-scripts_folder=$(dirname $(readlink -f $0))
-base_folder=$(dirname $scripts_folder)
-
-. $scripts_folder/ENV.inc
+NAME=grafana
+CONTAINER=$NAME
+HOST=$NAME
+IMAGE=$NAME
+PORT=3000
+DB_CONTAINER=influxdb
+DOCKER_HUB_IMG=caquicode/$NAME
 
 docker stop $CONTAINER
 docker rm $CONTAINER
